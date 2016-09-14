@@ -20,6 +20,7 @@ export default class ChatCtrl extends Controller {
         return Chats.findOne(this.chatId);
       }
     });
+    this.autoScroll();
   }
 
   inputUp() {
@@ -62,6 +63,15 @@ export default class ChatCtrl extends Controller {
     delete this.message;
   }
 
+  autoScroll() {
+    let recentMessagesNum = this.messages.length;
+    this.autorun(() => {
+      const currentMessagesNum = this.getCollectionReactively('messages').length;
+      const animate = recentMessagesNum != currentMessagesNum;
+      recentMessagesNum = currentMessagesNum;
+      this.scrollBottom(animate);
+    });
+  }
 }
 
 ChatCtrl.$inject = ['$stateParams', '$ionicScrollDelegate', '$timeout'];
