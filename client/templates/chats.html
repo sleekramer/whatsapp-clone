@@ -1,4 +1,7 @@
 <ion-view view-title="Chats">
+  <ion-nav side="right">
+    <button ng-click="chats.showNewChatModal()" class="button button-clear button-positive button-icon ion-ios-compose-outline"></button>
+  </ion-nav>
   <ion-content>
     <ion-list>
       <ion-item
@@ -7,8 +10,8 @@
         type="item-text-wrap"
         href="#/tab/chats/{{ chat._id }}"
       >
-        <img ng-src="{{ chat.picture }}"/>
-        <h2>{{ chat.name }}</h2>
+        <img ng-src="{{ chat | chatPicture }}"/>
+        <h2>{{ chat | chatName }}</h2>
         <p>{{ chat.lastMessage.text }}</p>
         <span class="last-message-timestamp">
           {{ chat.lastMessage.timestamp | calendar }}
