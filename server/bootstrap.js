@@ -34,33 +34,38 @@ Meteor.startup(function() {
     Messages.insert(m);
   });
 
-  const hardChats = [
-    {
-      name: 'Ethan Gonzalez',
-      picture: 'https://randomuser.me/api/portraits/thumb/men/1.jpg'
-    },
-    {
-      name: 'Bryan Wallace',
-      picture: 'https://randomuser.me/api/portraits/thumb/lego/1.jpg'
-    },
-    {
-      name: 'Avery Stewart',
-      picture: 'https://randomuser.me/api/portraits/thumb/women/1.jpg'
-    },
-    {
-      name: 'Katie Peterson',
-      picture: 'https://randomuser.me/api/portraits/thumb/women/2.jpg'
-    },
-    {
-      name: 'Ray Edwards',
-      picture: 'https://randomuser.me/api/portraits/thumb/men/2.jpg'
-    }
-  ];
-
-  hardChats.forEach((chat) => {
-    const message = Messages.findOne({ chatId: { $exists: false } });
+  // const hardChats = [
+    // profile: {
+    //   name: 'Ethan Gonzalez',picture: 'https://randomuser.me/api/portraits/thumb/men/1.jpg'
+    // },
+    // profile: {
+    //   name: 'Bryan Wallace', picture: 'https://randomuser.me/api/portraits/thumb/lego/1.jpg'
+    // },
+    // profile: {
+    //   name: 'Avery Stewart', picture: 'https://randomuser.me/api/portraits/thumb/women/1.jpg'
+    // },
+    // profile: {
+    //   name: 'Katie Peterson', picture: 'https://randomuser.me/api/portraits/thumb/women/2.jpg'
+    // },
+    // profile: {
+    //   name: 'Ray Edwards', picture: 'https://randomuser.me/api/portraits/thumb/men/2.jpg'
+    // }
+  // ];
+  const options = {
+    userIds: ['EfPaGWR3NFNpqM6mi', 'ytCoKubzdosjkeiSA'],
+    createdAt: new Date()
+  };
+  const chatId = Chats.insert(options);
+  const chat = Chats.findOne(chatId)
+  for (let i = 0; i < 5; i++) {
+    const message = Messages.findOne({ chatId: { $exists: false }});
     chat.lastMessage = message;
-    const chatId = Chats.insert(chat);
-    Messages.update(message._id, { $set: { chatId: chatId } });
-  });
+    Messages.update(message._id, { $set:{ chatId: chatId }});
+  }
+  // hardChats.forEach((chat) => {
+  //   const message = Messages.findOne({ chatId: { $exists: false } });
+  //   chat.lastMessage = message;
+  //   const chatId = Chats.insert(chat);
+  //   Messages.update(message._id, { $set: { chatId: chatId } });
+  // });
 });
