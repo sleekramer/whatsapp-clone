@@ -12,7 +12,10 @@
       >
         <img ng-src="{{ chat | chatPicture }}"/>
         <h2>{{ chat | chatName }}</h2>
-        <p>{{ chat.lastMessage.text }}</p>
+        <ng-switch on="chat.lastMessage.type">
+          <p ng-switch-when="picture">image</p>
+          <p ng-switch-when="text">{{ chat.lastMessage.text }}</p>
+        </ng-switch>
         <span class="last-message-timestamp">
           {{ chat.lastMessage.timestamp | calendar }}
         </span>
